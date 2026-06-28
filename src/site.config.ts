@@ -52,9 +52,31 @@ export type SiteBrief = {
   brand?: Brand
 }
 
+/**
+ * Brand FLOOR aligned to DESIGN.md (binding source of truth).
+ *
+ * The (marketing) layout re-emits these as :root token overrides at runtime via
+ * brandStyle(), so they win over globals.css for the standard shadcn tokens —
+ * primary, the neutral ramp, radius. The orange "seal" accent (#ea580c) and the
+ * raw-aesthetic decorative tokens are NOT expressible here, so they live under
+ * custom names in globals.css (which brandStyle never overrides). Fonts are wired
+ * with next/font in (marketing)/layout.tsx, so `fonts` is intentionally omitted
+ * (setting it would make brandStyle fight next/font for --font-sans/--font-display).
+ */
 const siteConfig: SiteBrief = {
   archetype: 'affiliate',
-  business: { name: 'Home Gym Verdict' },
+  business: {
+    name: 'Home Gym Verdict',
+    tagline: 'Small Space. Big Strength. Honest Reviews.',
+  },
+  brand: {
+    palette: {
+      primary: '#1e40af', // DESIGN §3 — deep brand blue (replaces template indigo)
+      primaryForeground: '#ffffff',
+      neutral: 'slate', // cool, sturdy ink ramp (slate-900 #0f172a == --ink)
+    },
+    radius: 0.25, // DESIGN §6 — tight, no-nonsense corners
+  },
 }
 
 export default siteConfig

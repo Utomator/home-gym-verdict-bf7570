@@ -30,7 +30,7 @@ export type SiteFooterProps = {
 function FooterAnchor({ link }: { link: FooterLink }) {
   const isInternal = link.href.startsWith('/') && !link.href.startsWith('//')
   const classes =
-    'text-sm text-muted-foreground no-underline transition-colors hover:text-foreground'
+    'text-sm text-ink-soft no-underline underline-offset-4 transition-colors hover:text-seal hover:underline'
   return isInternal ? (
     <Link href={link.href} className={classes}>
       {link.label}
@@ -56,28 +56,38 @@ export function SiteFooter({
   const copy = copyright ?? `© ${year} ${brandName}. All rights reserved.`
 
   return (
-    <footer className={cn('border-t border-border bg-muted/40', className)}>
+    <footer className={cn('border-t-2 border-ink grid-paper', className)}>
       <Container size="wide" className="py-16 lg:py-20">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-12 lg:gap-8">
           {/* Brand block */}
           <div className="col-span-2 sm:col-span-3 lg:col-span-4">
             <Link
               href={homeHref}
-              className="inline-flex items-center gap-2 rounded-md text-lg font-semibold tracking-tight text-foreground no-underline"
+              className="inline-flex items-center gap-2.5 rounded text-lg font-semibold tracking-tight text-ink no-underline"
             >
-              {logo ?? <span className="font-[family-name:var(--font-display)]">{brandName}</span>}
+              {logo ?? (
+                <>
+                  <span
+                    className="grid size-7 place-items-center rounded-full border-2 border-ink bg-seal text-xs font-bold text-white"
+                    aria-hidden="true"
+                  >
+                    ✓
+                  </span>
+                  <span className="font-[family-name:var(--font-display)] text-xl font-bold">
+                    {brandName}
+                  </span>
+                </>
+              )}
             </Link>
             {description ? (
-              <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
-                {description}
-              </p>
+              <p className="mt-4 max-w-xs leading-relaxed text-ink-soft">{description}</p>
             ) : null}
           </div>
 
           {/* Link columns */}
           {columns.map((col) => (
             <div key={col.title} className="lg:col-span-2">
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-foreground">
+              <h2 className="font-[family-name:var(--font-display)] text-sm font-bold uppercase tracking-wider text-seal-deep">
                 {col.title}
               </h2>
               <ul className="mt-4 flex flex-col gap-3">
@@ -92,8 +102,8 @@ export function SiteFooter({
         </div>
 
         {/* Legal bar */}
-        <div className="mt-14 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted-foreground">{copy}</p>
+        <div className="mt-14 flex flex-col gap-4 border-t-2 border-ink pt-8 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-ink-soft">{copy}</p>
           {legalLinks.length > 0 ? (
             <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
               {legalLinks.map((link) => (

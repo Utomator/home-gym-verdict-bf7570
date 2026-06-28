@@ -23,25 +23,28 @@ import { cn } from '@/lib/cn'
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost'
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'icon'
 
+// Anti-polish raw aesthetic (DESIGN §6): ink-bordered, blur-free hard shadow,
+// display-font label, and a "stamp-press" interaction (btn-stamp) on filled CTAs.
 const base = cn(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg font-medium no-underline',
-  'transition-colors duration-150 select-none',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded font-bold no-underline',
+  'font-[family-name:var(--font-display)] select-none',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
   'disabled:pointer-events-none disabled:opacity-50 [&_svg]:shrink-0',
 )
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90',
-  secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-  outline: 'border border-border bg-background text-foreground hover:bg-muted',
-  ghost: 'text-foreground hover:bg-muted',
+  primary: 'btn-stamp border-2 border-ink bg-seal text-white',
+  secondary: 'btn-stamp border-2 border-ink bg-brand text-white',
+  outline:
+    'border-2 border-ink bg-background text-ink transition-colors hover:bg-paper btn-stamp',
+  ghost: 'border-2 border-transparent text-ink transition-colors hover:bg-paper',
 }
 
 const sizes: Record<ButtonSize, string> = {
-  sm: 'h-9 px-3.5 text-sm',
-  md: 'h-11 px-5 text-sm',
-  lg: 'h-12 px-7 text-base',
-  icon: 'h-10 w-10',
+  sm: 'h-9 px-4 text-sm',
+  md: 'h-11 px-5 text-base',
+  lg: 'h-13 px-7 text-lg',
+  icon: 'h-11 w-11',
 }
 
 type CommonProps = {

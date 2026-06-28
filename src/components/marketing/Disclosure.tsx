@@ -13,9 +13,9 @@ export function AffiliateDisclosure({ text }: { text?: string }) {
   return (
     <aside
       aria-label="Affiliate disclosure"
-      className="flex items-start gap-3 rounded-lg border border-border bg-muted/50 px-4 py-3 text-sm text-muted-foreground"
+      className="flex items-start gap-3 rounded border-2 border-ink bg-seal-tint px-4 py-3 text-sm text-ink"
     >
-      <Info className="mt-0.5 size-4 shrink-0 text-muted-foreground" strokeWidth={2} aria-hidden />
+      <Info className="mt-0.5 size-4 shrink-0 text-seal-deep" strokeWidth={2.5} aria-hidden />
       <p className="leading-relaxed">{text || DEFAULT_DISCLOSURE}</p>
     </aside>
   )

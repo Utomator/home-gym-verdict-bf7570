@@ -31,22 +31,17 @@ export function Section({
   variant = 'default',
 }: Props) {
   return (
-    <section className={cn('py-20 sm:py-28', variant === 'soft' ? 'bg-muted/40' : 'bg-background')}>
+    <section className={cn('py-20 sm:py-28', variant === 'soft' ? 'grid-paper' : 'bg-background')}>
       <Container>
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            {eyebrow ? (
-              <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-                {eyebrow}
-              </p>
-            ) : null}
-            <h2 className="mt-3 text-balance font-[family-name:var(--font-display)] text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+            {eyebrow ? <span className="stamp-label">{eyebrow}</span> : null}
+            <h2 className="mt-4 text-balance font-[family-name:var(--font-display)] text-4xl font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl">
               {heading}
             </h2>
+            <div className="skew-rule mt-5 w-24" aria-hidden="true" />
             {lede ? (
-              <p className="mt-4 text-pretty text-lg leading-relaxed text-muted-foreground">
-                {lede}
-              </p>
+              <p className="mt-5 text-pretty text-lg leading-relaxed text-ink-soft">{lede}</p>
             ) : null}
           </div>
           {ctaLabel && ctaHref ? (

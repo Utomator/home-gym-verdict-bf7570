@@ -24,27 +24,33 @@ export function Card({ href, eyebrow, title, body, meta, children }: Props) {
       <Link
         href={href}
         className={cn(
-          'flex h-full flex-col rounded-xl border border-border bg-card p-6 no-underline',
-          'shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md',
+          'raw-card raw-card-hover flex h-full flex-col p-6 no-underline',
           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
         )}
       >
         {eyebrow ? (
-          <p className="text-xs font-semibold uppercase tracking-wide text-primary">{eyebrow}</p>
+          <p className="font-[family-name:var(--font-display)] text-xs font-bold uppercase tracking-widest text-seal-deep">
+            {eyebrow}
+          </p>
         ) : null}
         <h3
           className={cn(
-            'text-lg font-semibold leading-snug tracking-tight text-card-foreground transition-colors group-hover:text-primary',
+            'font-[family-name:var(--font-display)] text-xl font-bold leading-snug tracking-tight text-ink transition-colors group-hover:text-brand',
             eyebrow ? 'mt-2' : '',
           )}
         >
           {title}
         </h3>
         {body ? (
-          <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{body}</p>
+          <p className="mt-3 line-clamp-3 leading-relaxed text-ink-soft">{body}</p>
         ) : null}
         {children}
-        {meta ? <p className="mt-4 text-xs font-medium text-muted-foreground">{meta}</p> : null}
+        {meta ? (
+          <p className="mt-4 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-muted-foreground">
+            <span className="h-px w-5 bg-ink" aria-hidden="true" />
+            {meta}
+          </p>
+        ) : null}
       </Link>
     </article>
   )
@@ -56,8 +62,8 @@ type EmptyProps = {
 
 export function EmptyState({ message }: EmptyProps) {
   return (
-    <div className="rounded-xl border border-dashed border-border bg-muted/40 px-6 py-16 text-center">
-      <p className="text-sm text-muted-foreground">{message}</p>
+    <div className="rounded border-2 border-dashed border-ink/40 bg-paper px-6 py-16 text-center">
+      <p className="font-[family-name:var(--font-display)] text-lg text-ink-soft">{message}</p>
     </div>
   )
 }

@@ -50,46 +50,36 @@ export function FeatureGrid({
       <Container>
         <div className="mx-auto max-w-2xl text-center">
           {eyebrow ? (
-            <p className="text-sm font-semibold uppercase tracking-wide text-primary">
-              {eyebrow}
-            </p>
+            <span className="stamp-label mx-auto">{eyebrow}</span>
           ) : null}
-          <h2 className="mt-3 text-balance text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
+          <h2 className="mt-4 text-balance font-[family-name:var(--font-display)] text-4xl font-bold leading-[1.05] tracking-tight text-ink sm:text-5xl">
             {heading}
           </h2>
           {description ? (
-            <p className="mx-auto mt-4 max-w-prose text-pretty text-lg leading-relaxed text-muted-foreground">
+            <p className="mx-auto mt-5 max-w-prose text-pretty text-lg leading-relaxed text-ink-soft">
               {description}
             </p>
           ) : null}
         </div>
 
         <ul className={cn('mt-16 grid list-none grid-cols-1 gap-6 pl-0', COLS[columns])}>
-          {features.map((feature) => {
+          {features.map((feature, i) => {
             const Icon = resolveIcon(feature.icon)
             return (
-              <li
-                key={feature.title}
-                className={cn(
-                  'group rounded-xl border border-border bg-card p-6',
-                  'shadow-sm transition-colors hover:border-primary/40',
-                )}
-              >
+              <li key={feature.title} className="raw-card raw-card-hover group p-6">
                 <span
                   className={cn(
-                    'inline-flex size-11 items-center justify-center rounded-lg',
-                    'bg-primary/10 text-primary',
+                    'inline-flex size-12 items-center justify-center rounded border-2 border-ink',
+                    i % 2 === 0 ? 'bg-brand-tint text-brand-deep' : 'bg-seal-tint text-seal-deep',
                   )}
                   aria-hidden="true"
                 >
-                  <Icon className="size-5.5" strokeWidth={2} />
+                  <Icon className="size-6" strokeWidth={2.5} />
                 </span>
-                <h3 className="mt-5 text-base font-semibold text-card-foreground">
+                <h3 className="mt-5 font-[family-name:var(--font-display)] text-xl font-bold text-ink">
                   {feature.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {feature.description}
-                </p>
+                <p className="mt-2 leading-relaxed text-ink-soft">{feature.description}</p>
               </li>
             )
           })}

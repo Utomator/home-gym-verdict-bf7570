@@ -1,0 +1,26 @@
+{
+  "slug": "home-gym-verdict-bf7570",
+  "niche": "home gym equipment reviews for small apartments",
+  "vibe": "efficient, sturdy, no-nonsense, resourceful",
+  "mood": "authoritative, practical, empowering, trustworthy",
+  "style_name": "Anti-Polish / Raw Aesthetic",
+  "palette": {
+    "primary": "#1e40af",
+    "secondary": "#ea580c",
+    "neutral": "#EFF6FF"
+  },
+  "typography": {
+    "display": "Architects Daughter",
+    "text": "Annie Use Your Telescope"
+  },
+  "density": "balanced",
+  "image_style_token_block": "On-brand art direction for Home Gym Verdict (home gym equipment reviews for small apartments). Visual mood: authoritative, practical, empowering, trustworthy. Style: Anti-Polish / Raw Aesthetic. Color grade aligned to primary #1e40af and accent #ea580c. Composition density: balanced. Avoid: Slick, glossy gradients or over-polished 3D elements; Generic stock photography of large, pristine gyms; Flimsy or delicate font pairings; Excessive whitespace that feels empty, not intentional. Cohesive, editorial, premium; consistent lighting and palette across every asset; no generic stock look, no clip-art, no template filler.",
+  "illustration_style": "authoritative, practical, empowering, trustworthy",
+  "anti_patterns": [
+    "Slick, glossy gradients or over-polished 3D elements",
+    "Generic stock photography of large, pristine gyms",
+    "Flimsy or delicate font pairings",
+    "Excessive whitespace that feels empty, not intentional",
+    "Animations that feel slow or purely decorative"
+  ]
+}

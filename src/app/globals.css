@@ -1,43 +1,62 @@
 @import "tailwindcss";
 
-/* ── DESIGN TOKENS ────────────────────────────────────────────────────────────
-   The single source of truth for the marketing surface. Every section + primitive
-   consumes ONLY these semantic tokens (shadcn/ui naming: background, foreground,
-   primary, muted, border, ring, …) — never raw hexes — so one brand recolors the
-   entire site by overriding this layer.
+/* ── DESIGN TOKENS · HOME GYM VERDICT ─────────────────────────────────────────
+   Style: Anti-Polish / Raw Aesthetic (DESIGN.md §2). Vibe: efficient, sturdy,
+   no-nonsense, resourceful. The look is built on HARD, blur-free offset shadows,
+   a charcoal ink hairline-but-bold border, a blue-tinted "paper" surface, and a
+   burnt-orange "seal of approval" accent used like a rubber stamp.
 
-   Values are a restrained, AA-contrast light theme: a neutral zinc/slate ramp
-   plus ONE brand accent (indigo). To rebrand, change --primary (+ optionally the
-   neutral ramp). Radii and a subtle shadow scale are tokenized so every block
-   shares identical rhythm. */
+   Two token tiers:
+   1. STANDARD shadcn tokens (background, foreground, primary, muted, border, …).
+      These are ALSO re-emitted at runtime by brandStyle() from siteConfig.brand
+      (primary #1e40af, slate ramp, radius 0.25rem) — kept in sync here so the
+      preview surface and any non-brandStyle render match.
+   2. CUSTOM brand tokens (--ink, --seal, --paper, --shadow-hard, …). brandStyle
+      does NOT manage these, so they survive untouched — this is where the raw
+      aesthetic that the standard tokens can't express actually lives. The
+      template default indigo (#4f46e5) is GONE. */
 :root {
   --background: #ffffff;
-  --foreground: #18181b;
+  --foreground: #0f172a; /* slate-900 ink */
 
   --card: #ffffff;
-  --card-foreground: #18181b;
+  --card-foreground: #0f172a;
 
-  --muted: #f4f4f5;
-  --muted-foreground: #71717a;
+  --muted: #f1f5f9; /* slate-100 */
+  --muted-foreground: #64748b; /* slate-500 */
 
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
 
-  --primary: #4f46e5; /* brand accent — override to rebrand the whole site */
+  --primary: #1e40af; /* DESIGN §3 — deep brand blue */
   --primary-foreground: #ffffff;
 
-  --secondary: #f4f4f5;
-  --secondary-foreground: #27272a;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #1e293b; /* slate-800 */
 
-  --border: #e4e4e7;
-  --input: #e4e4e7;
-  --ring: #6366f1;
+  --border: #e2e8f0; /* slate-200 */
+  --input: #e2e8f0;
+  --ring: #1e40af;
 
-  --radius: 0.625rem;
+  --radius: 0.25rem; /* DESIGN §6 */
 
-  --shadow-sm: 0 1px 2px 0 rgb(24 24 27 / 0.05);
-  --shadow-md: 0 4px 12px -2px rgb(24 24 27 / 0.08);
-  --shadow-lg: 0 12px 32px -8px rgb(24 24 27 / 0.12);
+  /* ── custom raw-aesthetic tokens (brandStyle-safe; never overridden) ──────── */
+  --ink: #0f172a; /* charcoal — borders, hard shadows, display type */
+  --ink-soft: #334155; /* slate-700 — secondary ink */
+  --brand: #1e40af; /* deep blue */
+  --brand-deep: #1e3a8a; /* blue-900 */
+  --brand-tint: #dbeafe; /* blue-100 fill */
+  --paper: #eff6ff; /* blue-50 — sectioned "paper" surface */
+  --paper-line: #c7d7f0; /* faint grid-line ink on paper */
+  --seal: #ea580c; /* DESIGN §3 — burnt-orange "verdict" seal */
+  --seal-deep: #c2410c; /* orange-700 */
+  --seal-tint: #ffedd5; /* orange-100 fill */
+
+  /* Hard, blur-free offset shadows = the signature of the anti-polish look. */
+  --shadow-sm: 2px 2px 0 0 var(--ink);
+  --shadow-md: 4px 4px 0 0 var(--ink);
+  --shadow-lg: 6px 6px 0 0 var(--ink);
+  --shadow-seal: 4px 4px 0 0 var(--seal);
 }
 
 /* Expose the tokens to Tailwind v4 utilities (bg-primary, text-muted-foreground,
@@ -60,20 +79,44 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
+  /* Custom brand colors → utilities (bg-ink, text-seal, border-paper-line, …). */
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-brand: var(--brand);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-tint: var(--brand-tint);
+  --color-paper: var(--paper);
+  --color-paper-line: var(--paper-line);
+  --color-seal: var(--seal);
+  --color-seal-deep: var(--seal-deep);
+  --color-seal-tint: var(--seal-tint);
+
+  --radius-sm: calc(var(--radius) - 1px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
 
   --shadow-sm: var(--shadow-sm);
   --shadow-md: var(--shadow-md);
   --shadow-lg: var(--shadow-lg);
+  --shadow-seal: var(--shadow-seal);
 
-  /* One display + one text family. Wire next/font by overriding these from the
-     root layout (e.g. --font-sans: var(--font-inter)). */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-display: var(--font-sans);
+  /* DESIGN §4 — display: Architects Daughter, text: Annie Use Your Telescope.
+     Wired via next/font in (marketing)/layout.tsx, which sets the --font-*-src
+     variables; the :root block below points the design tokens at them. */
+  --font-sans: var(--font-text-src), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-src), "Comic Sans MS", ui-sans-serif, cursive;
+}
+
+/* next/font injects --font-display-src / --font-text-src on <html>; map the
+   design tokens onto them as REAL :root vars so `var(--font-display)` in
+   components resolves (an @theme `inline` font value is not emitted as a var).
+   Defined after @theme so it wins; brandStyle leaves font vars alone (no
+   brand.fonts), so there is no runtime fight here. */
+:root {
+  --font-sans: var(--font-text-src), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-src), "Comic Sans MS", ui-sans-serif, cursive;
 }
 
 /* ── CLEAN SLATE ──────────────────────────────────────────────────────────────
@@ -352,3 +395,140 @@ footer {
   }
 }
 /* end @layer components */
+
+/* ── RAW AESTHETIC TOOLKIT ────────────────────────────────────────────────────
+   Reusable classes that encode DESIGN.md §2/§6: hard offset shadows, skewed grid
+   lines, a stamped "verdict seal" CTA micro-interaction, and hand-drawn review
+   score rings. Token-driven; lives in @layer components so utilities still win. */
+@layer components {
+  /* Heavy, blur-free card — the core surface of the whole site. */
+  .raw-card {
+    background: var(--card);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+  }
+  .raw-card-hover:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Faint, deliberately skewed graph-paper grid for "paper" sections. */
+  .grid-paper {
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--paper-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--paper-line) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-position: -1px -1px;
+  }
+
+  /* A single slightly-skewed rule line (the "visible, slightly skewed grid"). */
+  .skew-rule {
+    height: 3px;
+    background: var(--ink);
+    transform: skewY(-0.6deg);
+    transform-origin: left;
+  }
+
+  /* Eyebrow rendered like an inked stamp label. */
+  .stamp-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 2px solid var(--ink);
+    border-radius: var(--radius);
+    background: var(--seal-tint);
+    padding: 0.25rem 0.7rem;
+    font-family: var(--font-display);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* The "VERDICT" seal — a rotated, double-ringed orange stamp. */
+  .verdict-seal {
+    display: inline-grid;
+    place-items: center;
+    width: 6.5rem;
+    height: 6.5rem;
+    border-radius: 9999px;
+    border: 3px solid var(--seal);
+    outline: 2px solid var(--seal);
+    outline-offset: 4px;
+    background: var(--seal-tint);
+    color: var(--seal-deep);
+    font-family: var(--font-display);
+    text-align: center;
+    line-height: 1.05;
+    transform: rotate(-8deg);
+  }
+
+  /* Hand-drawn-feel review score ring (conic fill, ink ring, big number). */
+  .score-ring {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    width: 5rem;
+    height: 5rem;
+    border-radius: 9999px;
+    border: 2px solid var(--ink);
+    background:
+      conic-gradient(var(--seal) calc(var(--score, 9) * 10%), transparent 0) border-box,
+      var(--card);
+    box-shadow: var(--shadow-sm);
+  }
+  .score-ring::after {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border-radius: 9999px;
+    background: var(--card);
+    border: 1.5px solid var(--ink);
+  }
+  .score-ring > span {
+    position: relative;
+    z-index: 1;
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* CTA "stamp" micro-interaction: press down onto its hard shadow on hover. */
+  .btn-stamp {
+    box-shadow: var(--shadow-md);
+    transition:
+      transform 90ms ease,
+      box-shadow 90ms ease;
+  }
+  .btn-stamp:hover {
+    transform: translate(2px, 2px);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-stamp:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 0 var(--ink);
+  }
+
+  /* Marker-style highlight behind inline emphasis. */
+  .marker {
+    background: linear-gradient(transparent 62%, var(--seal-tint) 62%);
+    padding: 0 0.1em;
+  }
+}
+/* end raw aesthetic toolkit */
+
+@media (prefers-reduced-motion: reduce) {
+  .raw-card,
+  .raw-card-hover,
+  .btn-stamp {
+    transition: none;
+  }
+}

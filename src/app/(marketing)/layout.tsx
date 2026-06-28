@@ -1,6 +1,24 @@
 import type { ReactNode } from 'react'
+import { Annie_Use_Your_Telescope, Architects_Daughter } from 'next/font/google'
 import '../globals.css'
 import { ogImages, organizationSchema, websiteSchema } from '@p51/engine'
+
+// DESIGN.md §4 — display: Architects Daughter, text: Annie Use Your Telescope.
+// Self-hosted via next/font (no layout-shift, no runtime Google request). The
+// variables feed --font-display-src / --font-text-src, which globals.css maps
+// onto the --font-display / --font-sans design tokens.
+const displayFont = Architects_Daughter({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-display-src',
+  display: 'swap',
+})
+const textFont = Annie_Use_Your_Telescope({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-text-src',
+  display: 'swap',
+})
 import { Footer } from '@/components/marketing/Footer'
 import { Header } from '@/components/marketing/Header'
 import { JsonLd } from '@/components/marketing/JsonLd'
@@ -116,7 +134,7 @@ export default async function MarketingLayout({ children }: { children: ReactNod
   const { css: brandCss, fontsHref } = brandStyle(siteConfig.brand)
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${displayFont.variable} ${textFont.variable}`}>
       <head>
         {fontsHref ? (
           <>

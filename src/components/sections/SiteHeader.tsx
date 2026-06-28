@@ -57,8 +57,8 @@ export function SiteHeader({
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full border-b border-border',
-        'bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/65',
+        'sticky top-0 z-50 w-full border-b-2 border-ink',
+        'bg-background/90 backdrop-blur-md supports-[backdrop-filter]:bg-background/75',
         className,
       )}
     >
@@ -66,11 +66,21 @@ export function SiteHeader({
         {/* Brand */}
         <Link
           href={homeHref}
-          className="flex items-center gap-2 rounded-md font-semibold tracking-tight text-foreground no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          className="flex items-center gap-2.5 rounded font-semibold tracking-tight text-ink no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           onClick={() => setOpen(false)}
         >
           {logo ?? (
-            <span className="font-[family-name:var(--font-display)] text-lg">{brandName}</span>
+            <>
+              <span
+                className="grid size-7 place-items-center rounded-full border-2 border-ink bg-seal text-xs font-bold text-white"
+                aria-hidden="true"
+              >
+                ✓
+              </span>
+              <span className="font-[family-name:var(--font-display)] text-xl font-bold">
+                {brandName}
+              </span>
+            </>
           )}
         </Link>
 
@@ -80,7 +90,7 @@ export function SiteHeader({
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-md px-3 py-2 text-sm font-medium text-muted-foreground no-underline transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              className="rounded px-3 py-2 font-[family-name:var(--font-display)] text-base font-bold text-ink-soft no-underline underline-offset-4 transition-colors hover:text-seal hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
               {item.label}
             </Link>
@@ -115,7 +125,7 @@ export function SiteHeader({
 
       {/* Mobile panel */}
       {open ? (
-        <div id="site-mobile-menu" className="border-t border-border md:hidden">
+        <div id="site-mobile-menu" className="border-t-2 border-ink bg-paper md:hidden">
           <Container size="wide" as="nav" aria-label="Mobile" className="py-4">
             <ul className="flex flex-col gap-1">
               {navItems.map((item) => (

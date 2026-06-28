@@ -25,23 +25,23 @@ export type FaqAccordionProps = {
 
 export function FaqAccordion({ items, name = 'faq', className }: FaqAccordionProps) {
   return (
-    <div className={cn('divide-y divide-border rounded-xl border border-border bg-card', className)}>
+    <div className={cn('flex flex-col gap-4', className)}>
       {items.map((item) => (
         <details
           key={item.question}
           name={name}
-          className="group px-6 py-1 [&_summary::-webkit-details-marker]:hidden"
+          className="raw-card group px-6 py-1 [&_summary::-webkit-details-marker]:hidden"
         >
-          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left font-medium text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
-            <span className="text-base">{item.question}</span>
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground transition-transform duration-200 group-open:rotate-45">
-              <Plus width={16} height={16} strokeWidth={2.5} aria-hidden="true" />
+          <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-5 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background">
+            <span className="font-[family-name:var(--font-display)] text-lg font-bold text-ink">
+              {item.question}
+            </span>
+            <span className="flex size-9 shrink-0 items-center justify-center rounded border-2 border-ink bg-seal-tint text-seal-deep transition-transform duration-200 group-open:rotate-45">
+              <Plus width={18} height={18} strokeWidth={3} aria-hidden="true" />
             </span>
           </summary>
           <div className="pb-5 pr-12">
-            <p className="max-w-[65ch] text-sm leading-relaxed text-muted-foreground">
-              {item.answer}
-            </p>
+            <p className="max-w-[65ch] leading-relaxed text-ink-soft">{item.answer}</p>
           </div>
         </details>
       ))}
