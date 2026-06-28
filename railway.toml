@@ -1,0 +1,9 @@
+[build]
+builder = "NIXPACKS"
+buildCommand = "pnpm install --frozen-lockfile && pnpm payload generate:importmap && pnpm payload generate:types && pnpm build"
+
+[deploy]
+startCommand = "pnpm payload migrate && pnpm start"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 30
+restartPolicyType = "ON_FAILURE"

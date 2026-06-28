@@ -1,0 +1,3 @@
+# Spawning AI training opt-out signal
+# https://site.spawning.ai/ai-txt
+ai-train: no

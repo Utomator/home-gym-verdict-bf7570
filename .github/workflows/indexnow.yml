@@ -1,0 +1,22 @@
+name: IndexNow ping
+on:
+  deployment_status:
+
+jobs:
+  ping:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping IndexNow with sitemap URL
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          SITE_URL: ${{ vars.NEXT_PUBLIC_SERVER_URL }}
+        run: |
+          if [ -z "$INDEXNOW_KEY" ] || [ -z "$SITE_URL" ]; then
+            echo "Missing INDEXNOW_KEY or SITE_URL; skipping."
+            exit 0
+          fi
+          HOST=$(echo "$SITE_URL" | awk -F[/:] '{print $4}')
+          curl -sS -X POST 'https://api.indexnow.org/indexnow' \
+            -H 'content-type: application/json' \
+            -d "{\"host\":\"$HOST\",\"key\":\"$INDEXNOW_KEY\",\"keyLocation\":\"$SITE_URL/.well-known/indexnow/$INDEXNOW_KEY.txt\",\"urlList\":[\"$SITE_URL/sitemap.xml\"]}"

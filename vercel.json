@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm payload generate:importmap && pnpm payload generate:types && pnpm build",
+  "functions": {
+    "src/app/mcp/authoring/route.ts": {
+      "memory": 1024,
+      "maxDuration": 60
+    },
+    "src/app/mcp/route.ts": {
+      "memory": 1024,
+      "maxDuration": 30
+    },
+    "src/app/(payload)/api/[...slug]/route.ts": {
+      "memory": 1024,
+      "maxDuration": 60
+    }
+  }
+}

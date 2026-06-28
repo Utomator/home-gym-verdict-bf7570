@@ -1,0 +1,10 @@
+name: E2E
+on:
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "E2E suite is wired in Phase J after Railway preview URLs are available."

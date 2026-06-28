@@ -1,0 +1,18 @@
+# Enforce LF line endings for all text in the working tree, regardless of the
+# checkout platform's git core.autocrlf setting. Biome's formatter defaults to LF;
+# without this, a Windows checkout (autocrlf=true) rewrites files to CRLF and
+# `biome check` reports a formatting diff on every file. `* text=auto eol=lf`
+# normalizes line endings on checkout so lint/format stays green everywhere.
+* text=auto eol=lf
+
+# Binary assets — never normalize.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.avif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.pdf binary
